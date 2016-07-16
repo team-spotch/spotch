@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Title:</strong>
+  <%= @circle_event.title %>
+</p>
+
+<p>
+  <strong>Desc:</strong>
+  <%= @circle_event.desc %>
+</p>
+
+<p>
+  <strong>Event date:</strong>
+  <%= @circle_event.event_date %>
+</p>
+
+<p>
+  <strong>Place:</strong>
+  <%= @circle_event.place %>
+</p>
+
+<p>
+  <strong>One phrase:</strong>
+  <%= @circle_event.one_phrase %>
+</p>
+
+<%= link_to 'Edit', edit_circle_event_path(@circle_event) %> |
+<%= link_to 'Back', circle_events_path %>
