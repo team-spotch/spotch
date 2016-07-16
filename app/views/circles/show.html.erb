@@ -1,4 +1,7 @@
-<p id="notice"><%= notice %></p>
+<p id="notice">
+	<%= notice %>
+	<%= alert %>	
+</p>
 
 <p>
   <strong>Name:</strong>
@@ -14,6 +17,12 @@
   <strong>Desc:</strong>
   <%= @circle.desc %>
 </p>
+
+<% if @circle.circle_users.where(user_id: current_user.id).exists? %>
+	<%= button_to "退会する",circle_circle_users_path(@circle.id),method: :delete %>
+<% else %>
+	<%= button_to "参加する",circle_circle_users_path(@circle.id),method: :post %>
+<% end %>
 
 <%= link_to 'Edit', edit_circle_path(@circle) %> |
 <%= link_to 'Back', circles_path %>

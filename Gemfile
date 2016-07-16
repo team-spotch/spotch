@@ -48,3 +48,5 @@ end
 gem 'devise'
 gem 'carrierwave'
 gem 'rmagick'
+gem 'hirb'
+gem 'hirb-unicode'
