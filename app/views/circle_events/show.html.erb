@@ -1,0 +1,11 @@
+
+
+<p>イベント名: <%= @circle_event.title %></p>
+<p>イベント詳細:<%= @circle_event.desc %></p>
+<p>日時:<%= @circle_event.event_date %></p>
+<p>場所:<%= @circle_event.place %></p>
+<p>主催者からのメッセージ:<%= @circle_event.one_phrase %></p>
+
+<%= link_to "イベント編集",edit_circle_event_path(@circle_event) %>
+<%= link_to "イベント削除",circle_event_path(@circle_event),method: :delete %>
+<%= link_to "イベント一覧に戻る",circle_events_path %>

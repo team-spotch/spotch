@@ -11,16 +11,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160716074952) do
+ActiveRecord::Schema.define(version: 20160716170137) do
 
   create_table "circle_events", force: :cascade do |t|
+    t.integer  "circle_id"
     t.string   "title"
     t.text     "desc"
     t.date     "event_date"
     t.string   "place"
     t.string   "one_phrase"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "circle_users", force: :cascade do |t|
