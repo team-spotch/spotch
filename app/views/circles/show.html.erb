@@ -24,5 +24,13 @@
 	<%= button_to "参加する",circle_circle_users_path(@circle.id),method: :post %>
 <% end %>
 
+<p>サークルメンバー一覧</p>
+<% @circle.circle_members.each do |circle_member| %>
+	<div>
+		<%= circle_member.email %>
+	</div>
+
+<% end %>
+
 <%= link_to 'Edit', edit_circle_path(@circle) %> |
 <%= link_to 'Back', circles_path %>

@@ -1,5 +1,5 @@
 class CircleUsersController < ApplicationController
-
+	before_action :authenticate_user!
 	def create
 		circleUser = current_user.circle_users.build(circle_id: params[:circle_id])
 
