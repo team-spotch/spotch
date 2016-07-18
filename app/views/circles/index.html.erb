@@ -1,6 +1,6 @@
 
 
-<h1>Listing Circles</h1>
+<h1>サークル一覧</h1>
 
 <table>
   <thead>
@@ -18,7 +18,7 @@
         <td><%= circle.name %></td>
         <td><%= image_tag circle.image.url %></td>
         <td><%= circle.desc %></td>
-        <td><%= link_to 'Show', circle %></td>
+        <td><%= link_to '詳細', circle %></td>
         <td><%= link_to 'Edit', edit_circle_path(circle) %></td>
         <td><%= link_to 'Destroy', circle, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
@@ -28,4 +28,4 @@
 
 <br>
 
-<%= link_to 'New Circle', new_circle_path %>
+<%= link_to 'サークルを新しく作る', new_circle_path %>
