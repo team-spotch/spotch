@@ -15,7 +15,7 @@
   <%= @circle.desc %>
 </p>
 
-<% if @circle.circle_users.where(user_id: current_user.id).exists? %>
+<% if @circle.circle_member?(@circle,current_user) %>
 	<%= button_to "退会する",circle_circle_users_path(@circle.id),method: :delete %>
 <% else %>
 	<%= button_to "参加する",circle_circle_users_path(@circle.id),method: :post %>
@@ -29,5 +29,7 @@
 
 <% end %>
 
-<%= link_to '編集する', edit_circle_path(@circle) %> |
+<% if @circle.circle_member?(@circle,current_user) %>
+  <%= link_to '編集する', edit_circle_path(@circle) %> |
+<% end %>
 <%= link_to 'サークル一覧へもどる', circles_path %>
