@@ -19,8 +19,10 @@
         <td><%= image_tag circle.image.url %></td>
         <td><%= circle.desc %></td>
         <td><%= link_to '詳細', circle %></td>
-        <td><%= link_to 'Edit', edit_circle_path(circle) %></td>
-        <td><%= link_to 'Destroy', circle, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% if circle.circle_member?(circle,current_user) %>
+          <td><%= link_to 'Edit', edit_circle_path(circle) %></td>
+          <td><%= link_to 'Destroy', circle, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>

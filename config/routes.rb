@@ -4,6 +4,6 @@ Rails.application.routes.draw do
   end
   devise_for :users
 
-  resources :circle_events 
+  resources :circle_events
 
 end
