@@ -20,8 +20,8 @@
         <td><%= circle.desc %></td>
         <td><%= link_to '詳細', circle %></td>
         <% if circle.circle_member?(circle,current_user) %>
-          <td><%= link_to 'Edit', edit_circle_path(circle) %></td>
-          <td><%= link_to 'Destroy', circle, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          <td><%= link_to '編集する', edit_circle_path(circle) %></td>
+          <td><%= link_to '削除する', circle, method: :delete, data: { confirm: 'Are you sure?' } %></td>
         <% end %>
       </tr>
     <% end %>
