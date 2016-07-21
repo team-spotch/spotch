@@ -1,9 +1,13 @@
 
+<%= link_to "サークルページ",circle_path(@circle) %>
+
 <% @circle_events.each do |circle_event| %>
 	<div class="circle-event">
-		<p>イベント名:<%= circle_event.title %>  <%= link_to "詳細",circle_event_path(circle_event) %></p>
-				
+		<p>イベント名:<%= circle_event.title %> <%= link_to "詳細",circle_circle_event_path(@circle,circle_event) %></p>
 	</div>
 <% end %>
 
-<%= link_to "イベント新規作成",new_circle_event_path %>
+
+<% if current_user.circle_users.where(circle_id: params[:circle_id]).exists? %>
+	<%= link_to "イベント新規作成",new_circle_circle_event_path(@circle) %>
+<% end %>

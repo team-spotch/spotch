@@ -29,6 +29,8 @@
 
 <% end %>
 
+<p> <%= link_to "主催イベント",circle_circle_events_path(@circle) %> <p>
+
 <% if @circle.circle_member?(@circle,current_user) %>
   <%= link_to '編集する', edit_circle_path(@circle) %> |
 <% end %>

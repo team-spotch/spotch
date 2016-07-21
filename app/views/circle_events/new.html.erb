@@ -1,4 +1,4 @@
 
-<%= render "form" ,submit_message: "新規作成"%>
+<%= render "form",submit_message: "新規作成",circle: @circle %>
 
-<%= link_to "一覧へもどる",circle_events_path%>
+<%= link_to "一覧へもどる",circle_circle_events_path(@circle)%>

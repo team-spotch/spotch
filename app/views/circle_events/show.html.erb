@@ -6,6 +6,9 @@
 <p>場所:<%= @circle_event.place %></p>
 <p>主催者からのメッセージ:<%= @circle_event.one_phrase %></p>
 
-<%= link_to "イベント編集",edit_circle_event_path(@circle_event) %>
-<%= link_to "イベント削除",circle_event_path(@circle_event),method: :delete %>
-<%= link_to "イベント一覧に戻る",circle_events_path %>
+
+<% if current_user.circle_users.where(circle_id: params[:circle_id]).exists? %>
+	<%= link_to "イベント編集",edit_circle_circle_event_path(@circle,@circle_event) %>
+	<%= link_to "イベント削除",circle_circle_event_path(@circle,@circle_event),method: :delete %>
+<% end %>
+<%= link_to "イベント一覧に戻る",circle_circle_events_path %>
