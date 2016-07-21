@@ -5,6 +5,7 @@ class Circle < ActiveRecord::Base
 	has_many :circle_users,dependent: :destroy
 	has_many :circle_members,through: :circle_users,source: :user
 	has_many :circle_events,dependent: :destroy
+	has_many :circle_talks
 
 	validate :add_error_sample
 

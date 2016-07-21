@@ -32,6 +32,7 @@
 <p> <%= link_to "主催イベント",circle_circle_events_path(@circle) %> <p>
 
 <% if @circle.circle_member?(@circle,current_user) %>
+  <p> <%= link_to "サークルトークへ",circle_circle_talks_path(@circle) %></p>
   <%= link_to '編集する', edit_circle_path(@circle) %> |
 <% end %>
 <%= link_to 'サークル一覧へもどる', circles_path %>

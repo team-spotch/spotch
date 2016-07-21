@@ -1,7 +1,7 @@
 class CircleEventsController < ApplicationController
 
 	before_action :authenticate_user!, except: :index
-	before_action :circle_index
+	before_action :set_circle
 	before_action :event_authentication,only: [:new,:create,:update,:destroy]
 
 	def index
@@ -22,7 +22,7 @@ class CircleEventsController < ApplicationController
 		circle_event.circle_id = params[:circle_id] 
 
 		if circle_event.save
-			redirect_to circle_circle_event_path(@circle),notice: "イベント作成に成功しました"
+			redirect_to circle_circle_events_path(@circle),notice: "イベント作成に成功しました"
 		else
 			redirect_to new_circle_circle_event_path(@circle),alert: "イベント作成に失敗しました"
 		end
@@ -44,7 +44,7 @@ class CircleEventsController < ApplicationController
 	def destroy
 		@circle_event = CircleEvent.find(params[:id])
 		@circle_event.destroy
-		redirect_to circle_circle_event_path,notice: "イベントを削除しました"
+		redirect_to circle_circle_events_path,notice: "イベントを削除しました"
 	end
 
 	private 
@@ -52,7 +52,7 @@ class CircleEventsController < ApplicationController
 		params.require(:circle_event).permit(:title,:desc,:event_date,:place,:one_phrase)
 	end
 
-	def circle_index
+	def set_circle
 		@circle = Circle.find(params[:circle_id])
 	end
 
