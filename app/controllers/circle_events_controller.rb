@@ -48,5 +48,4 @@ class CircleEventsController < ApplicationController
 		params.require(:circle_event).permit(:title,:desc,:event_date,:place,:one_phrase)
 	end
 
-
 end
