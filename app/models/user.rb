@@ -6,5 +6,8 @@ class User < ActiveRecord::Base
 
   has_many :circle_users,dependent: :destroy
   has_many :circle_talks
+  has_many :circle_events
+  has_many :circle_event_tickets
+
   
 end

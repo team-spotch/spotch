@@ -11,7 +11,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160721101148) do
+ActiveRecord::Schema.define(version: 20160723070821) do
+
+  create_table "circle_event_tickets", force: :cascade do |t|
+    t.integer  "circle_event_id"
+    t.integer  "user_id"
+    t.boolean  "confirm"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "circle_events", force: :cascade do |t|
     t.integer  "circle_id"
@@ -22,6 +30,7 @@ ActiveRecord::Schema.define(version: 20160721101148) do
     t.string   "one_phrase"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "author_id"
   end
 
   create_table "circle_talks", force: :cascade do |t|
