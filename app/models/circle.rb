@@ -18,6 +18,7 @@ class Circle < ActiveRecord::Base
 		end
 	end
 
+
 	def circle_member?(circle,user)
 		circle_users.where(circle_id: circle.id,user_id: user.id).exists?
 	end
