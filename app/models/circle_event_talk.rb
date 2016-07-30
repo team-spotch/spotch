@@ -2,7 +2,7 @@ class CircleEventTalk < ActiveRecord::Base
 
 
 	belongs_to :user
-	belongs_to :circel_event
+	belongs_to :circle_event
 
 
 end

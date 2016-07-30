@@ -27,6 +27,23 @@
 	<%= button_to "参加",circle_event_attend_path(@circle_event.circle,@circle_event),method: :post %>
 <% end %>
 
+<p>参加者一覧</p>
+	<% @circle_event.event_participants(@circle_event).each do |ticket| %>
+		<p><%= ticket.user.email %></p>
+	<% end %>
+
+<% if @circle_event.ticket_status?(@circle_event,current_user,true).exists? %>
+	<% @circle_event_talks.each do |talk| %>
+		<p><%= talk.body %> :<%= talk.user.email %></p>
+	<% end %>
+
+	<%= form_tag(circle_event_talks_path,method: "POST") do %>
+		<%= text_field_tag :body %>
+		<%= submit_tag "送信" %>
+	<% end %>
+<% end %>
+
+
 
 <% if current_user.circle_users.where(circle_id: params[:circle_id]).exists? %>
 	<%= link_to "イベント編集",edit_circle_circle_event_path(@circle,@circle_event) %>

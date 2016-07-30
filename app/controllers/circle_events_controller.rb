@@ -11,6 +11,7 @@ class CircleEventsController < ApplicationController
 
 	def show
 		@circle_event = CircleEvent.find(params[:id])
+		@circle_event_talks = @circle_event.circle_event_talks
 	end
 
 	def new
