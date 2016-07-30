@@ -1,8 +1,8 @@
 
 <% if @circle_event.author.id == current_user.id %>
-	<% if @circle_event.circle_event_tickets.where(circle_event_id: @circle_event.id,confirm: false).exists?%>
-		<p><%= @circle_event.circle_event_tickets.where(circle_event_id: @circle_event.id,confirm: false).count %>件の承認待ちがあります</p>
-		<% @circle_event.circle_event_tickets.where(circle_event_id: @circle_event.id,confirm: false).each do |ticket| %>
+	<% if @circle_event.event_pending?(@circle_event).exists?%>
+		<p><%= @circle_event.event_pending?(@circle_event).count %>件の承認待ちがあります</p>
+		<% @circle_event.event_pending?(@circle_event).each do |ticket| %>
 			<p><%= ticket.user.email %> <%= link_to "承認する",approve_circle_event_attend_path(@circle_event.circle,@circle_event,ticket.id),method: :post %>
 		<% end %>
     <% else %>
@@ -19,9 +19,9 @@
 <p>場所:<%= @circle_event.place %></p>
 <p>主催者からのメッセージ:<%= @circle_event.one_phrase %></p>
 
-<% if @circle_event.circle_event_tickets.where(circle_event_id: @circle_event.id,user_id: current_user.id,confirm: false).exists? %>
+<% if @circle_event.ticket_status?(@circle_event,current_user,false).exists? %>
 	<p>承認待ち</p>
-<% elsif @circle_event.circle_event_tickets.where(circle_event_id: @circle_event.id,user_id: current_user.id,confirm: true).exists?  %>
+<% elsif @circle_event.ticket_status?(@circle_event,current_user,true).exists?  %>
 	<%= button_to "参加キャンセル",destroy_circle_event_attend_path(@circle_event.circle,@circle_event),method: :delete %>
 <% else %>
 	<%= button_to "参加",circle_event_attend_path(@circle_event.circle,@circle_event),method: :post %>

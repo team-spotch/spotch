@@ -10,4 +10,12 @@ class CircleEvent < ActiveRecord::Base
 	validates :desc,presence: true
 	validates :author_id,presence: true
 
+	def event_pending?(event)
+		circle_event_tickets.where(circle_event_id: event.id,confirm: false)
+	end
+
+	def ticket_status?(circle_event,user,status)
+		circle_event_tickets.where(circle_event_id: circle_event.id,user_id: user.id,confirm: status)		
+	end
+
 end
