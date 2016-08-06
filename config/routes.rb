@@ -1,12 +1,15 @@
 Rails.application.routes.draw do
-
+  devise_for :users
+  
+  devise_scope :user do
+   root 'devise/sessions#new'
+  end
   resources :users, only:[:index, :edit, :update, :show] do
     resource :relationships, only:[:create, :destroy]
     get :follows, on: :member
     get :folowers, on: :member
   end
 
-  get '/users' => 'users#index'
   get '/users/:id' => 'users#show'
 
   
@@ -15,8 +18,6 @@ Rails.application.routes.draw do
     resources :circle_events
     resource :circle_talks,only: [:show,:create]
   end
-
-  devise_for :users
 
   post "/circle_events/:id/talks" => "circle_event_talks#create",as: "circle_event_talks"
 

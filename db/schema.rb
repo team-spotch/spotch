@@ -11,30 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160716070536) do
-
-  create_table "relationships", force: :cascade do |t|
-    t.integer  "following_id"
-    t.integer  "follower_id"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
-  end
-
-  create_table "user_profs", force: :cascade do |t|
-    t.string   "image"
-    t.string   "name"
-    t.integer  "age"
-    t.string   "sex"
-    t.string   "birthplace"
-    t.string   "location"
-    t.string   "experience_sports"
-    t.string   "charenge_sports"
-    t.string   "foot"
-    t.string   "hand"
-    t.integer  "user_id"
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
-
+ActiveRecord::Schema.define(version: 20160729142019) do
 
   create_table "circle_event_talks", force: :cascade do |t|
     t.integer  "circle_event_id"
@@ -85,6 +62,29 @@ ActiveRecord::Schema.define(version: 20160716070536) do
     t.text     "desc"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "relationships", force: :cascade do |t|
+    t.integer  "following_id"
+    t.integer  "follower_id"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
+
+  create_table "user_profs", force: :cascade do |t|
+    t.string   "image"
+    t.string   "name"
+    t.integer  "age"
+    t.string   "sex"
+    t.string   "birthplace"
+    t.string   "location"
+    t.string   "experience_sports"
+    t.string   "charenge_sports"
+    t.string   "foot"
+    t.string   "hand"
+    t.integer  "user_id"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
   end
 
   create_table "users", force: :cascade do |t|
