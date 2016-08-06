@@ -1,0 +1,15 @@
+
+
+<% @circle_talks.each do |circle_talk| %>
+	<p><%= circle_talk.body %>  投稿者:<%= circle_talk.user.email %></p>
+<% end %>
+
+
+
+
+<%= form_tag(circle_circle_talks_path,method: "POST") do %>
+	<%= text_field_tag :body %>
+	<%= submit_tag "送信" %>
+<% end %>
+
+<%= link_to "サークルページへもどる",circle_path(params[:circle_id]) %>

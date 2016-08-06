@@ -14,4 +14,10 @@ class User < ActiveRecord::Base
    	inverse_follows.where(follower_id: user.id).exists?
    end
 
+  has_many :circle_users,dependent: :destroy
+  has_many :circle_talks
+  has_many :circle_events
+  has_many :circle_event_tickets
+  has_many :circle_event_talks
+  
 end

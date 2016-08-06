@@ -46,3 +46,11 @@ group :development do
 end
 
 gem 'devise'
+gem 'carrierwave'
+gem 'rmagick'
+gem 'hirb'
+gem 'hirb-unicode'
+gem 'pry-rails'
+gem 'therubyracer' # javascript runtime。lessをコンパイルするために必要
+gem 'less-rails' # Railsでlessを使えるようにする。Bootstrapがlessで書かれているため
+gem 'twitter-bootstrap-rails' # Bootstrapの本体

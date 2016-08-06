@@ -34,6 +34,57 @@ ActiveRecord::Schema.define(version: 20160716070536) do
     t.integer  "user_id"
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false
+
+
+  create_table "circle_event_talks", force: :cascade do |t|
+    t.integer  "circle_event_id"
+    t.integer  "user_id"
+    t.text     "body"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "circle_event_tickets", force: :cascade do |t|
+    t.integer  "circle_event_id"
+    t.integer  "user_id"
+    t.boolean  "confirm"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "circle_events", force: :cascade do |t|
+    t.integer  "circle_id"
+    t.string   "title"
+    t.text     "desc"
+    t.date     "event_date"
+    t.string   "place"
+    t.string   "one_phrase"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "author_id"
+  end
+
+  create_table "circle_talks", force: :cascade do |t|
+    t.integer  "circle_id"
+    t.integer  "user_id"
+    t.text     "body"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "circle_users", force: :cascade do |t|
+    t.string   "circle_id"
+    t.string   "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "circles", force: :cascade do |t|
+    t.string   "name"
+    t.string   "image"
+    t.text     "desc"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|

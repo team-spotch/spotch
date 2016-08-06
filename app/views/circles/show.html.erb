@@ -1,0 +1,38 @@
+
+
+<p>
+  <strong>Name:</strong>
+  <%= @circle.name %>
+</p>
+
+<p>
+  <strong>Image:</strong>
+  <%= image_tag @circle.image.url %>
+</p>
+
+<p>
+  <strong>Desc:</strong>
+  <%= @circle.desc %>
+</p>
+
+<% if @circle.circle_member?(@circle,current_user) %>
+	<%= button_to "退会する",circle_circle_users_path(@circle.id),method: :delete %>
+<% else %>
+	<%= button_to "参加する",circle_circle_users_path(@circle.id),method: :post %>
+<% end %>
+
+<p>サークルメンバー一覧</p>
+<% @circle.circle_members.each do |circle_member| %>
+	<div>
+		<%= circle_member.email %>
+	</div>
+
+<% end %>
+
+<p> <%= link_to "主催イベント",circle_circle_events_path(@circle) %> <p>
+
+<% if @circle.circle_member?(@circle,current_user) %>
+  <p> <%= link_to "サークルトークへ",circle_circle_talks_path(@circle) %></p>
+  <%= link_to '編集する', edit_circle_path(@circle) %> |
+<% end %>
+<%= link_to 'サークル一覧へもどる', circles_path %>

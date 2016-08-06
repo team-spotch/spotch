@@ -1,0 +1,28 @@
+
+
+<%= form_for([circle,@circle_event]) do |f| %>
+
+  <div class="field">
+    <%= f.label :title %><br>
+    <%= f.text_field :title %>
+  </div>
+  <div class="field">
+    <%= f.label :desc %><br>
+    <%= f.text_area :desc %>
+  </div>
+  <div class="field">
+    <%= f.date_select :event_date %>
+  </div>
+   <div class="field">
+    <%= f.label :place %><br>
+    <%= f.text_field :place %>
+  </div>
+   <div class="field">
+    <%= f.label :one_phrase %><br>
+    <%= f.text_field :one_phrase %>
+  </div>
+  <div class="actions">
+    <%= f.submit submit_message %>
+  </div>
+
+<% end %>
