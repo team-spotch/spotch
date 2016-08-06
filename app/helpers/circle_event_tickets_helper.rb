@@ -1,0 +1,2 @@
+module CircleEventTicketsHelper
+end

@@ -29,7 +29,7 @@ class CirclesController < ApplicationController
 
     respond_to do |format|
       if @circle.save
-        format.html { redirect_to @circle, notice: 'Circle was successfully created.' }
+        format.html { redirect_to @circle, notice: 'サークルが作成されました。' }
         format.json { render :show, status: :created, location: @circle }
       else
         format.html { render :new }
@@ -43,7 +43,7 @@ class CirclesController < ApplicationController
   def update
     respond_to do |format|
       if @circle.update(circle_params)
-        format.html { redirect_to @circle, notice: 'Circle was successfully updated.' }
+        format.html { redirect_to @circle, notice: 'サークル情報が更新されました。' }
         format.json { render :show, status: :ok, location: @circle }
       else
         format.html { render :edit }
@@ -57,7 +57,7 @@ class CirclesController < ApplicationController
   def destroy
     @circle.destroy
     respond_to do |format|
-      format.html { redirect_to circles_url, notice: 'Circle was successfully destroyed.' }
+      format.html { redirect_to circles_url, notice: 'サークルが削除されました。' }
       format.json { head :no_content }
     end
   end

@@ -11,6 +11,7 @@ class CircleEventsController < ApplicationController
 
 	def show
 		@circle_event = CircleEvent.find(params[:id])
+		@circle_event_talks = @circle_event.circle_event_talks
 	end
 
 	def new
@@ -20,6 +21,7 @@ class CircleEventsController < ApplicationController
 	def create
 		circle_event = CircleEvent.new(circle_event_params)
 		circle_event.circle_id = params[:circle_id] 
+		circle_event.author_id = current_user.id
 
 		if circle_event.save
 			redirect_to circle_circle_events_path(@circle),notice: "イベント作成に成功しました"
