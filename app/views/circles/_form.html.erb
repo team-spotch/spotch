@@ -1,19 +1,19 @@
 <%= form_for(@circle) do |f| %>
   <% if @circle.errors.any? %>
     <div id="error_explanation">
-      <h2><%= @circle.errors.count %> 件のエラーがあります。</h2>
+      <h2><%= @circle.errors[:base].count %> 件のエラーがあります。</h2>
 
       <ul>
-      <% @circle.errors.full_messages.each do |message| %>
+      <% @circle.errors[:base].each do |message| %>
         <li><%= message %></li>
       <% end %>
       </ul>
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :name %><br>
-    <%= f.text_field :name %>
+  <div class="form-group" >
+    <%= f.label :name,class: "control-label" %><br>
+    <%= f.text_field :name,class: "form-control" %>
   </div>
   <div class="field">
     <%= f.label :image %><br>

@@ -1,4 +1,6 @@
 class CirclesController < ApplicationController
+  layout "circle"
+
   before_action :set_circle, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!
 
@@ -32,7 +34,7 @@ class CirclesController < ApplicationController
         format.html { redirect_to @circle, notice: 'サークルが作成されました。' }
         format.json { render :show, status: :created, location: @circle }
       else
-        format.html { render :new }
+        format.html { render :new}
         format.json { render json: @circle.errors, status: :unprocessable_entity }
       end
     end
