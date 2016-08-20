@@ -9,22 +9,17 @@
 <body class='<%= controller.controller_name %>'>
 <header>
   <nav>
-    
-    <% if user_signed_in? %> 
-        <%= current_user.email %>
-        <%= link_to "ログアウト", destroy_user_session_path, method: :delete %>
-    <% else %>
-        <%= link_to "サインイン", new_user_registration_path %> |
-        <%= link_to "ログイン", new_user_session_path %>
-    <% end %>
+    <ul>
+      <% if user_signed_in? %> 
+        <li><%= link_to "ログアウト", destroy_user_session_path, method: :delete %></li>
+      <% else %>
+        <li><%= link_to "ログイン", new_user_session_path %></li>
+        <li><%= link_to "新規登録", new_user_registration_path %></li>
+      <% end %>
+    </ul>
   </nav>
 </header>
-<% flash.each do |name, msg| %>
-  <div class="alert alert-<%= name == "notice" ? "success" : "danger" %>">
-    <a class="close" data-dismiss="alert">×</a> <!-- アラートダイアログに×ボタンをつける -->
-    <%= msg %>
-  </div>
-<% end %>
+
 
 <%= yield %>
 
