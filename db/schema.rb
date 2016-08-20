@@ -64,6 +64,29 @@ ActiveRecord::Schema.define(version: 20160729142019) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "relationships", force: :cascade do |t|
+    t.integer  "following_id"
+    t.integer  "follower_id"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
+
+  create_table "user_profs", force: :cascade do |t|
+    t.string   "image"
+    t.string   "name"
+    t.integer  "age"
+    t.string   "sex"
+    t.string   "birthplace"
+    t.string   "location"
+    t.string   "experience_sports"
+    t.string   "charenge_sports"
+    t.string   "foot"
+    t.string   "hand"
+    t.integer  "user_id"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+  end
+
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
     t.string   "encrypted_password",     default: "", null: false
