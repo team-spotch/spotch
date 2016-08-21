@@ -5,3 +5,11 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+
+100.times do |i|
+    Circle.create!(
+        name: "a",
+        image: open("#{Rails.root}/app/assets/images/circle_img_default.jpeg"),
+        desc: "a"
+    )
+end

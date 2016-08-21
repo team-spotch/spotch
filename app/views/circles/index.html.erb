@@ -1,37 +1,38 @@
 
+<div class="contents clearfix">
+  <div class="side">
+    <div class="side-top">
+      <h2>サークル一覧</h2>
+    </div>
+    <%= search_form_for @q do |f| %>
+      <%= f.search_field :name_or_desc_cont %>
 
-<h1>サークル一覧</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>サークル名</th>
-      <th>サークル画像</th>
-      <th>サークル紹介</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @circles.each do |circle| %>
-      <tr>
-        <td><%= circle.name %></td>
-        <% if circle.image? %>
-          <td><%= image_tag circle.image.url %></td>
-        <% else %>
-          <td><%= image_tag "circle_img_default.jpeg",width: 100,height: 100%></td>
-        <% end %>
-        <td><%= circle.desc %></td>
-        <td><%= link_to '詳細', circle %></td>
-        <% if circle.circle_member?(circle,current_user) %>
-          <td><%= link_to '編集する', edit_circle_path(circle) %></td>
-          <td><%= link_to '削除する', circle, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-        <% end %>
-      </tr>
+      <%= f.submit %>
     <% end %>
-  </tbody>
-</table>
+  </div>
+  <!-- /.side -->
+  <div class="main clearfix">
+    <div class="circles-list clearfix">
+      <% @circles.each do |circle| %>
+        <div class="circle">
+          <% if circle.image? %>
+            <%= image_tag circle.image.url,class: "circle-image" %></td>
+          <% else %>
+            <%= image_tag "circle_img_dafault_gray.png",class: "circle-image"%>
+          <% end %>
+          <p><%= circle.name %></p>
+          <p><%= circle.desc %></p>
+          <p><%= link_to 'もっとみる', circle_path(circle) %></p>
+        </div>
+      <% end %>
+      <%= paginate @circles %>
+    </div>
+    <!-- /.circles -->
+  </div>
+  <!-- /.main -->
+</div>
+<!-- /.contents -->
 
-<br>
 
 <%= link_to 'サークルを作る', new_circle_path %>
+

@@ -7,7 +7,9 @@ class CirclesController < ApplicationController
   # GET /circles
   # GET /circles.json
   def index
-    @circles = Circle.all
+    #@circles = Circle.page(params[:page]).per(9)
+    @q = Circle.search(params[:q])
+    @circles = @q.result(distinct: true).page(params[:page]).per(9)
   end
 
   # GET /circles/1
