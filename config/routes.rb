@@ -17,7 +17,10 @@ Rails.application.routes.draw do
     resource :circle_users,only: [:create,:destroy]
     resources :circle_events
     resource :circle_talks,only: [:show,:create]
+    resource :circle_likes,only: [:create,:destroy],as: "likes"
   end
+
+
 
   post "/circle_events/:id/talks" => "circle_event_talks#create",as: "circle_event_talks"
 

@@ -17,20 +17,29 @@
         	<% end %>
 	        <p><%= @circle.name %></p>
     	    <p><%= @circle.desc %></p>
-        	<p><i class="fa fa-user" aria-hidden="true"></i><%= @circle.circle_members.count %></p>			
+        	<p><i class="fa fa-user" aria-hidden="true"></i><%= @circle.circle_members.count %></p>	
+        	<p><i class="fa fa-thumbs-o-up" aria-hidden="true"></i><%= @circle.circle_likes.count %></p>
+        	<% if @circle.circle_liked?(current_user) %>
+        	<p><%= link_to "いいね取り消す",circle_likes_path(@circle.id),method: :delete %></p>
+        	<% else %>		
+        	<p><%= link_to "いいね",circle_likes_path(@circle.id),method: :post %></p>		
+			<% end %>
 		</div>			
       	
 	</div>
 	<div class="main">
 		<div class="circle-events clearfix">
 			<% @circle_events.each do |circle_event| %>
-				<div class="circle-event">
-				<p>イベント名:<%= circle_event.title %> <%= link_to "詳細",circle_circle_event_path(@circle,circle_event) %></p>
-				<% if circle_event.image? %>
-					<%= image_tag circle_event.image.url,class: "circle-event-image" %>
-				<% else %>
-					<%= image_tag "circle_img_dafault_gray.png",class: "circle-event-image" %>
-				<% end %>
+				<div class="circle-event clearfix">
+					<% if circle_event.image? %>
+						<%= image_tag circle_event.image.url,class: "circle-event-image" %>
+					<% else %>
+						<%= image_tag "circle_img_dafault_gray.png",class: "circle-event-image" %>
+					<% end %>
+					<div class="circle-event-prof">
+						<p>イベント名: <%= link_to circle_event.title ,circle_circle_event_path(@circle,circle_event) %></p>
+						<p>概要:<%= circle_event.desc %></p>
+					</div>
 				</div>
 			<% end %>
 		</div>

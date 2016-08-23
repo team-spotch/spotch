@@ -7,6 +7,9 @@ class Circle < ActiveRecord::Base
 	has_many :circle_events,dependent: :destroy
 	has_many :circle_talks,dependent: :destroy
 
+	has_many :circle_likes
+
+
 	validates :name,presence: true
 
 	validate :add_error_sample
@@ -23,6 +26,10 @@ class Circle < ActiveRecord::Base
 
 	def circle_member?(circle,user)
 		circle_users.where(circle_id: circle.id,user_id: user.id).exists?
+	end
+
+	def circle_liked?(user)
+		circle_likes.where(user_id: user.id).exists?
 	end
 
 end
