@@ -1,13 +1,45 @@
 
-<%= link_to "サークルページ",circle_path(@circle) %>
-
-<% @circle_events.each do |circle_event| %>
-	<div class="circle-event">
-		<p>イベント名:<%= circle_event.title %> <%= link_to "詳細",circle_circle_event_path(@circle,circle_event) %></p>
+<div class="contents-index clearfix">
+	<div class="side">
+		<div class="side-top clearfix">
+			<% if current_user.circle_users.where(circle_id: params[:circle_id]).exists? %>
+				<%= button_to "サークルページ",circle_path(@circle),class: "btn btn-primary circle-link-pri",method: :get %>
+				<%= button_to "イベント新規作成",new_circle_circle_event_path(@circle),class: "btn btn-success new-event-link",method: :get %>
+			<% else %>
+				<%= button_to "サークルページ",circle_path(@circle),class: "btn btn-primary circle-link-pub",method: :get %>
+			<% end %>
+		</div>
+		<div class="side-contents">
+			<% if @circle.image? %>
+    	    	<%= image_tag @circle.image.url,class: "circle-image" %></td>
+      		<% else %>
+            	<%= image_tag "circle_img_dafault_gray.png",class: "circle-image"%>
+        	<% end %>
+	        <p><%= @circle.name %></p>
+    	    <p><%= @circle.desc %></p>
+        	<p><i class="fa fa-user" aria-hidden="true"></i><%= @circle.circle_members.count %></p>			
+		</div>			
+      	
 	</div>
-<% end %>
+	<div class="main">
+		<div class="circle-events clearfix">
+			<% @circle_events.each do |circle_event| %>
+				<div class="circle-event">
+				<p>イベント名:<%= circle_event.title %> <%= link_to "詳細",circle_circle_event_path(@circle,circle_event) %></p>
+				<% if circle_event.image? %>
+					<%= image_tag circle_event.image.url,class: "circle-event-image" %>
+				<% else %>
+					<%= image_tag "circle_img_dafault_gray.png",class: "circle-event-image" %>
+				<% end %>
+				</div>
+			<% end %>
+		</div>
+		<%= paginate @circle_events %>
+	</div>
 
 
-<% if current_user.circle_users.where(circle_id: params[:circle_id]).exists? %>
-	<%= link_to "イベント新規作成",new_circle_circle_event_path(@circle) %>
-<% end %>
+
+</div>
+
+
+

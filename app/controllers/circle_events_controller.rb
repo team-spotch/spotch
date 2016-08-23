@@ -1,11 +1,14 @@
 class CircleEventsController < ApplicationController
 
+	layout 'circle'
+
 	before_action :authenticate_user!, except: :index
 	before_action :set_circle
 	before_action :event_authentication,only: [:new,:create,:update,:destroy]
 
 	def index
-		@circle_events = CircleEvent.where(circle_id: params[:circle_id])
+		@circle_events = CircleEvent.where(circle_id: params[:circle_id]).page(params[:page]).per(10)
+		@circle = Circle.find(params[:circle_id])
 
 	end
 
@@ -51,7 +54,7 @@ class CircleEventsController < ApplicationController
 
 	private 
 	def circle_event_params
-		params.require(:circle_event).permit(:title,:desc,:event_date,:place,:one_phrase)
+		params.require(:circle_event).permit(:title,:desc,:event_date,:place,:one_phrase,:image)
 	end
 
 	def set_circle

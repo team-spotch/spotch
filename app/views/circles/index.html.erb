@@ -1,14 +1,21 @@
 
-<div class="contents clearfix">
+<div class="contents-index clearfix">
   <div class="side">
-    <div class="side-top">
-      <h2>サークル一覧</h2>
+    <%= button_to "サークルを作る",new_circle_path,class: "btn btn-success",method: :get %>
+    <div class="side-nav">
+      <div class="side-top">
+        <h2>サークル一覧</h2>
+      </div>
+      <!-- /.side-top -->
+      <div class="side-content">
+        <%= search_form_for @q do |f| %>
+        <%= f.search_field :name_or_desc_cont %>
+        <%= f.submit %>
+        <% end %>
+      </div>
+      <!-- /.side-content -->
     </div>
-    <%= search_form_for @q do |f| %>
-      <%= f.search_field :name_or_desc_cont %>
-
-      <%= f.submit %>
-    <% end %>
+    <!-- /.side-nav -->
   </div>
   <!-- /.side -->
   <div class="main clearfix">
@@ -24,15 +31,14 @@
           <p><%= circle.desc %></p>
           <p><%= link_to 'もっとみる', circle_path(circle) %></p>
         </div>
+        <!-- /.circle -->
       <% end %>
       <%= paginate @circles %>
     </div>
-    <!-- /.circles -->
+    <!-- /.circles-list -->
   </div>
   <!-- /.main -->
 </div>
 <!-- /.contents -->
 
-
-<%= link_to 'サークルを作る', new_circle_path %>
 
