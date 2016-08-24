@@ -39,6 +39,49 @@
 					width: 300px;
 					height: 180px;
 				}
+				.circle-status {
+					width: 300px;
+					.circle-user-count {
+						width: 70px;
+						font-size: 13px;
+						line-height: 24px;
+						text-align: center;
+						box-sizing: content-box;
+						border: 1px solid #0074bf;
+						border-radius: 5px;
+						color: #0074bf;
+						float: left;
+						margin-left: 65px;
+						.fa {
+							padding-right: 4px;
+						}
+					}
+					.circle-likes {
+						width: 70px;
+						font-size: 13px;
+						line-height: 24px;
+						text-align: center;
+						box-sizing: content-box;
+						float: right;
+						margin-right: 65px;
+						a {
+							text-decoration: none;
+							display: block;
+							border-radius: 5px;
+							line-height: 24px;
+							color: #d9534f;
+							border: 1px solid #d9534f;
+						}
+						.fa {
+							padding-right: 4px;
+						}
+						a:hover {
+							border: 1px solid #c9302c;
+							background: #d9534f;
+							color: white;
+						}
+					}
+				}
 			}
 		}
 		.main {

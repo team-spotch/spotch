@@ -9,6 +9,7 @@
 				<%= button_to "サークルページ",circle_path(@circle),class: "btn btn-primary circle-link-pub",method: :get %>
 			<% end %>
 		</div>
+		<!-- /.side-top -->
 		<div class="side-contents">
 			<% if @circle.image? %>
     	    	<%= image_tag @circle.image.url,class: "circle-image" %></td>
@@ -17,16 +18,19 @@
         	<% end %>
 	        <p><%= @circle.name %></p>
     	    <p><%= @circle.desc %></p>
-        	<p><i class="fa fa-user" aria-hidden="true"></i><%= @circle.circle_members.count %></p>	
-        	<p><i class="fa fa-thumbs-o-up" aria-hidden="true"></i><%= @circle.circle_likes.count %></p>
-        	<% if @circle.circle_liked?(current_user) %>
-        	<p><%= link_to "いいね取り消す",circle_likes_path(@circle.id),method: :delete %></p>
-        	<% else %>		
-        	<p><%= link_to "いいね",circle_likes_path(@circle.id),method: :post %></p>		
-			<% end %>
-		</div>			
-      	
+    	    <div class="circle-status clearfix">
+        		<p class="circle-user-count"><i class="fa fa-user-plus" aria-hidden="true"></i><%= @circle.circle_members.count %></p>	
+        		<% if @circle.circle_liked?(current_user) %>
+        			<p class="circle-likes"><a rel="nofollow" data-method="delete" href="/circles/<%= @circle.id %>/circle_likes"><i class="fa fa-thumbs-up" aria-hidden="true"></i><%= @circle.circle_likes.count %></a></p>
+        		<% else %>		
+        			<p class="circle-likes"><a rel="nofollow" data-method="post" href="/circles/<%= @circle.id %>/circle_likes"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i><%= @circle.circle_likes.count %></a></p>		
+				<% end %>
+			</div>
+			<!-- /.circle-status -->
+		</div>
+		<!-- /.side-contents  -->
 	</div>
+	<!-- /.side -->
 	<div class="main">
 		<div class="circle-events clearfix">
 			<% @circle_events.each do |circle_event| %>
@@ -40,15 +44,17 @@
 						<p>イベント名: <%= link_to circle_event.title ,circle_circle_event_path(@circle,circle_event) %></p>
 						<p>概要:<%= circle_event.desc %></p>
 					</div>
+					<!-- /.circle-event-prof -->
 				</div>
+				<!-- /.circle-event -->
 			<% end %>
 		</div>
+		<!-- /.circle-events -->
 		<%= paginate @circle_events %>
 	</div>
-
-
-
+	<!-- /.main -->
 </div>
+<!-- /.contents-index -->
 
 
 
