@@ -1,11 +1,15 @@
 class CirclesController < ApplicationController
+  layout "circle"
+
   before_action :set_circle, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!
 
   # GET /circles
   # GET /circles.json
   def index
-    @circles = Circle.all
+    #@circles = Circle.page(params[:page]).per(9)
+    @q = Circle.search(params[:q])
+    @circles = @q.result(distinct: true).page(params[:page]).per(9)
   end
 
   # GET /circles/1
@@ -32,7 +36,7 @@ class CirclesController < ApplicationController
         format.html { redirect_to @circle, notice: 'サークルが作成されました。' }
         format.json { render :show, status: :created, location: @circle }
       else
-        format.html { render :new }
+        format.html { render :new}
         format.json { render json: @circle.errors, status: :unprocessable_entity }
       end
     end

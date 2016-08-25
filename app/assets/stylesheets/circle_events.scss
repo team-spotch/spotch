@@ -1,3 +1,130 @@
 // Place all the styles related to the circleEvents controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.circle_events {
+	padding-top: 60px;
+	width: 100%;
+	background: #f7f5f4;
+	.contents-index {
+		width: 1100px;
+		margin: 0 auto;
+		height: auto;
+		.side {
+			width: 300px;
+			float: left;
+			.side-top {
+				margin-top: 30px;
+				.circle-link-pri {
+					width: 124px;
+					float: left;
+				}
+				
+				.new-event-link {
+					width: 138px;
+					float: right;
+				}
+				.circle-link-pub {
+					width: 130px;
+					float: none;
+					margin-left: 85px;
+				}
+
+			}
+			.side-contents {
+				margin-top: 30px;
+				height: 400px;
+				background: white;
+				.circle-image {
+					width: 300px;
+					height: 180px;
+				}
+				.circle-name {
+					font-weight: bold;
+					font-size: 17px;
+					line-height: 32px;
+					margin-left: 17px;
+					margin-bottom: 0;
+				}
+				.circle-desc {
+					font-size: 12px;
+					line-height: 14px;
+					margin-left: 13px;
+				}
+				.circle-status {
+					width: 300px;
+					.circle-user-count {
+						width: 70px;
+						font-size: 13px;
+						line-height: 24px;
+						text-align: center;
+						box-sizing: content-box;
+						border: 1px solid #0074bf;
+						border-radius: 5px;
+						color: #0074bf;
+						float: left;
+						margin-left: 65px;
+						.fa {
+							padding-right: 4px;
+						}
+					}
+					.circle-likes {
+						width: 70px;
+						font-size: 13px;
+						line-height: 24px;
+						text-align: center;
+						box-sizing: content-box;
+						float: right;
+						margin-right: 65px;
+						a {
+							text-decoration: none;
+							display: block;
+							border-radius: 5px;
+							line-height: 24px;
+							color: #d9534f;
+							border: 1px solid #d9534f;
+						}
+						.fa {
+							padding-right: 4px;
+						}
+						a:hover {
+							border: 1px solid #c9302c;
+							background: #d9534f;
+							color: white;
+						}
+					}
+				}
+			}
+		}
+		.main {
+			width: 800px;
+			float: right;
+			margin-top: 40px;
+			.circle-events {
+				width: 800px;
+				.circle-event {
+					width: 300px;
+					height: 200px;
+					margin-left: 50px;
+					margin-right: 50px;
+					float: left;
+					.circle-event-image {
+						width: 120px;
+						height: 120px;
+						float: left;
+						margin-top: 20px;
+					}
+					.circle-event-prof {
+						width: 180px;
+						height: 300px;
+						float: right;
+					}
+				}
+
+			}
+			.pagination {
+				margin-left: auto;
+			}
+		}
+	}
+}

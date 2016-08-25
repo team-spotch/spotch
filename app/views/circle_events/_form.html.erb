@@ -1,6 +1,7 @@
 
-
+  
 <%= form_for([circle,@circle_event]) do |f| %>
+
 
   <div class="field">
     <%= f.label :title %><br>
@@ -21,6 +22,11 @@
     <%= f.label :one_phrase %><br>
     <%= f.text_field :one_phrase %>
   </div>
+  <div class="field">
+    <%= f.label :image %>
+    <%= f.file_field :image %>
+  </div>
+
   <div class="actions">
     <%= f.submit submit_message %>
   </div>

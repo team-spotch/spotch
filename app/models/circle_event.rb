@@ -25,4 +25,6 @@ class CircleEvent < ActiveRecord::Base
 		circle_event_tickets.where(circle_event_id: circle_event.id,confirm: true)
 	end
 
+	mount_uploader :image,CircleEventImageUploader
+
 end

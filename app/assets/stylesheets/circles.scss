@@ -1,3 +1,76 @@
 // Place all the styles related to the circles controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+
+.circles {
+	padding-top: 60px;
+	width: 100%;
+	background: #F7F5F4;
+	.contents-index {
+		width: 1200px;
+		margin: 0 auto;
+		.side {
+			width: 22%;
+			margin-right: 4%;
+			margin-left: 4%;
+			height: 700px;
+			float: left;
+			.button_to {
+				margin: 50px auto 20px;
+				width: 200px;
+				.btn-success {
+					width: 200px;
+				}
+			}
+			.side-nav {
+				height: 600px;
+				background: #ff7469;
+				border-radius: 7px;
+				.side-top {
+					height: 50px; 
+					h2 {
+						color: white;
+						font-size: 24px;
+						text-align: center;
+						line-height: 50px;
+					}
+				}
+				.side-content {
+					height: 550px;
+					background: white;
+					border-radius: 0 0 7px 7px;
+				}
+			}
+		}
+
+		.main {
+			width: 70%;
+			float: right;
+			.circles-list {
+				margin-top: 30px;
+				.circle {
+					border: 1px solid #BCBDC2;
+					width: 240px;
+					height: 260px;
+					float: left;
+					background: white;
+					margin-left: 20px;
+					margin-right: 20px;
+					margin-bottom: 20px;
+					border-radius: 4px;
+					.circle-image {
+						width: 238px;
+						height: 150px;
+						border-radius: 4px 4px 0 0;
+					}
+				}
+				.pagination {
+					margin: 0 auto;
+				}
+
+			}
+		}
+	}
+
+}
