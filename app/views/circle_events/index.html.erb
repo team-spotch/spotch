@@ -16,8 +16,8 @@
       		<% else %>
             	<%= image_tag "circle_img_dafault_gray.png",class: "circle-image"%>
         	<% end %>
-	        <p><%= @circle.name %></p>
-    	    <p><%= @circle.desc %></p>
+	        <p class="circle-name"><%= @circle.name %></p>
+    	    <p class="circle-desc"><%= @circle.desc %></p>
     	    <div class="circle-status clearfix">
         		<p class="circle-user-count"><i class="fa fa-user-plus" aria-hidden="true"></i><%= @circle.circle_members.count %></p>	
         		<% if @circle.circle_liked?(current_user) %>
