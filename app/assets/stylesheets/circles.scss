@@ -71,5 +71,15 @@
 			}
 		}
 	}
-
+	#messages {
+		height: 400px;
+		overflow: scroll;
+		.my-msg {
+			text-align: right;
+		}
+		.other-msg {
+			text-align: left;
+		}
+	}
 }
+
