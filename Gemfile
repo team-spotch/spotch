@@ -56,3 +56,4 @@ gem 'less-rails' # Railsでlessを使えるようにする。Bootstrapがlessで
 gem 'twitter-bootstrap-rails' # Bootstrapの本体
 gem 'kaminari'
 gem 'ransack'
+gem 'pusher'
