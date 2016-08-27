@@ -1,4 +1,5 @@
 class CircleTalksController < ApplicationController
+	layout 'circle'
 
 	before_action :authenticate_user!
 	before_action :circle_member?
@@ -11,12 +12,23 @@ class CircleTalksController < ApplicationController
 		@circle_talk = CircleTalk.new(circle_talk_params)
 		@circle_talk.user_id = current_user.id
 		@circle_talk.circle_id = params[:circle_id]
+		@circle_talk.save 
 
+		line = "circle_talk_" + params[:circle_id].to_s
+
+		Pusher.trigger(line,'chat_event',{
+			message: circle_talk_params[:body],
+			name: current_user.email
+		})
+
+
+=begin
 		if @circle_talk.save 
 			redirect_to circle_circle_talks_path,notice: "メッセージ送信成功しました"
 		else
 			redirect_to circle_circle_talks_path,alert: "メッセージ送信に失敗しました"
 		end
+=end
 
 	end
 

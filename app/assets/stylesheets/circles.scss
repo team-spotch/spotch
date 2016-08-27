@@ -65,12 +65,21 @@
 						border-radius: 4px 4px 0 0;
 					}
 				}
-				.pagination {
-					margin: 0 auto;
+				.circle-paginate {
+					text-align: center;
 				}
-
 			}
 		}
 	}
-
+	#messages {
+		height: 400px;
+		overflow: scroll;
+		.my-msg {
+			text-align: right;
+		}
+		.other-msg {
+			text-align: left;
+		}
+	}
 }
+

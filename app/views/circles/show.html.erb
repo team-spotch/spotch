@@ -32,7 +32,83 @@
 <p> <%= link_to "主催イベント",circle_circle_events_path(@circle) %> <p>
 
 <% if @circle.circle_member?(@circle,current_user) %>
+  <button type="button" class="btn btn-primary modal-open" data-toggle="modal" data-target="#circleTalk">トーク</button>
+
   <p> <%= link_to "サークルトークへ",circle_circle_talks_path(@circle) %></p>
   <%= link_to '編集する', edit_circle_path(@circle) %> |
 <% end %>
 <%= link_to 'サークル一覧へもどる', circles_path %>
+
+<div class="modal fade" id="circleTalk" tabindex="-1" role="dialog" aria-labelledby="circleTalkLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">トーク</h4>
+      </div>
+      <!-- /.modal-header -->
+      <div class="modal-body">
+        <div id='messages'>
+          <% @circle.circle_talks.each do |circle_talk| %>
+            <% if circle_talk.user.id == current_user.id %>
+              <p class="my-msg"><%= circle_talk.body %>  投稿者:<%= circle_talk.user.email %></p>
+            <% else %>
+              <p class="other-msg"><%= circle_talk.body %>  投稿者:<%= circle_talk.user.email %></p>
+            <% end %>
+          <% end %>
+        </div>
+
+        <%= form_tag(circle_circle_talks_path(@circle.id),:remote => true) do %>
+        <%= text_field_tag :body %>
+        <%= submit_tag "送信" %>
+        <% end %>
+      </div>
+      <!-- /.modal-body -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+      <!-- /.modal-footer -->
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
+
+<script>
+  Pusher.logToConsole = true;
+
+  var pusher = new Pusher('26f18dcdcf80c348ef52', {
+    encrypted: true
+  });
+
+  var line = "circle_talk_<%= @circle.id.to_s%>" ;
+
+  var channel = pusher.subscribe(line);
+  channel.bind('chat_event', function(data) {
+    var messagelog = document.getElementById('messages');
+    var p = document.createElement('p');
+    p.innerHTML = data.message + " 投稿者:" + data.name;
+    messagelog.appendChild(messagediv);
+  });
+</script>
+<script>
+  // $(function(){
+  //   $('')
+  //   $('.modal-content').on('show', function(){
+  //     var posTop = $('#messages p:last-child').offset()['top'];
+  //     var aaa = $('#messages p:last-child').text(); 
+  //     console.log(posTop);
+  //     console.log(aaa);
+  //     $('#messages').scrollTop(posTop);
+  //   });
+  // });
+  $('.modal-open').click(function(){
+    var posTop = setTimeout(function(){ $('#messages p:last-child').offset()['top']; }, 3000);
+    var aaa = $('#messages p:last-child').text(); 
+    console.log(posTop);
+    console.log(aaa);
+    $('#messages').scrollTop(posTop);
+  });
+</script>
