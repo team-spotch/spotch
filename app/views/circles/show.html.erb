@@ -34,7 +34,7 @@
 <% if @circle.circle_member?(@circle,current_user) %>
   <button type="button" class="btn btn-primary modal-open" data-toggle="modal" data-target="#circleTalk">トーク</button>
 
-  <p> <%= link_to "サークルトークへ",circle_circle_talks_path(@circle) %></p>
+<br>
   <%= link_to '編集する', edit_circle_path(@circle) %> |
 <% end %>
 <%= link_to 'サークル一覧へもどる', circles_path %>
