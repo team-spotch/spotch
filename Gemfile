@@ -45,6 +45,11 @@ group :development do
   gem 'spring'
 end
 
+group :production do
+  gem 'pg',             '0.17.1'
+  gem 'rails_12factor', '0.0.2'
+end
+
 gem 'devise'
 gem 'carrierwave'
 gem 'rmagick'
@@ -57,3 +62,5 @@ gem 'twitter-bootstrap-rails' # Bootstrapの本体
 gem 'kaminari'
 gem 'ransack'
 gem 'pusher'
+gem 'momentjs-rails', '>= 2.9.0'
+gem 'bootstrap3-datetimepicker-rails', '~> 4.17.37'

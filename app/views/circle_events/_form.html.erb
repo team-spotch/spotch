@@ -11,8 +11,11 @@
     <%= f.label :desc %><br>
     <%= f.text_area :desc %>
   </div>
-  <div class="field">
-    <%= f.date_select :event_date %>
+  <div class='input-group date'>
+    <%= f.text_field :event_date, class: 'datepicker form-control' %>
+    <span class="input-group-addon">
+      <span class="fa fa-calendar"></span>
+    </span>
   </div>
    <div class="field">
     <%= f.label :place %><br>
@@ -32,3 +35,4 @@
   </div>
 
 <% end %>
+
