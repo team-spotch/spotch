@@ -8,6 +8,8 @@ class CircleEvent < ActiveRecord::Base
 
 	has_many :circle_event_talks
 
+	has_one :circle_event_location
+
 	validates :title,presence: true
 	validates :desc,presence: true
 	validates :author_id,presence: true

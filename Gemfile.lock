@@ -69,6 +69,7 @@ GEM
       warden (~> 1.2.3)
     erubis (2.7.0)
     execjs (2.7.0)
+    geocoder (1.3.7)
     globalid (0.3.7)
       activesupport (>= 4.1.0)
     hirb (0.7.3)
@@ -230,6 +231,7 @@ DEPENDENCIES
   carrierwave
   coffee-rails (~> 4.1.0)
   devise
+  geocoder
   hirb
   hirb-unicode
   jbuilder (~> 2.0)
