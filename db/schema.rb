@@ -58,8 +58,8 @@ ActiveRecord::Schema.define(version: 20160823193109) do
   end
 
   create_table "circle_users", force: :cascade do |t|
-    t.string   "circle_id"
-    t.string   "user_id"
+    t.integer  "circle_id"
+    t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
