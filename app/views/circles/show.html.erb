@@ -175,6 +175,9 @@
     name.className = 'msg-user-name';
     name.innerHTML = data.name;
     var p = document.createElement('p');
+    var img01 = document.createElement('img');
+    img01.className = 'msg-user-image img-circle';
+    $(img01).attr('src','/assets/'+ data.image);
     p.className = 'msg-body';
     p.innerHTML = data.message;
     if(user_name == '<%= current_user.email %>'){
@@ -183,12 +186,18 @@
       message.className = 'message oth-msg clearfix';
     }
 
+    info.appendChild(img01);
     info.appendChild(name);
     message.appendChild(info);
     message.appendChild(p);
     messagelog.appendChild(message);
+    
+    var body = document.getElementById('body');
+    body.value = '';
+
 
   });
+
 </script>
 <script>
   // $(function(){

@@ -12,15 +12,15 @@
   <% end %>
 
   <div class="form-group" >
-    <%= f.label :name,class: "control-label" %><br>
+    <%= f.label :name,"サークル名",class: "control-label" %>
     <%= f.text_field :name,class: "form-control",placeholder: "サークル名" %>
   </div>
   <div class="field">
-    <%= f.label :image %><br>
+    <%= f.label :image,"サークル画像" %>
     <%= f.file_field :image %>
   </div>
   <div class="field">
-    <%= f.label :desc %><br>
+    <%= f.label :desc,"サークル概要" %>
     <%= f.text_area :desc,class: "form-control",rows: "3",placeholder: "サークル概要" %>
   </div>
   <div class="actions">
