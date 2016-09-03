@@ -221,8 +221,8 @@
 						.circle-event {
 							width: 300px;
 							height: 200px;
-							margin-left: 50px;
-							margin-right: 50px;
+							margin-left: 37.5px;
+							margin-right: 37.5px;
 							float: left;
 							.circle-event-image {
 								width: 120px;
@@ -232,9 +232,15 @@
 							}
 							.circle-event-prof {
 								width: 180px;
-								height: 300px;
+								height: 200px;
 								float: right;
 							}
+						}
+						.circle-event:nth-child(odd) {
+							float: left;
+						}
+						.circle-event:nth-child(even) {
+							float: right;
 						}
 					}
 				}
