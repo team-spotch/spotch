@@ -64,6 +64,24 @@
 						height: 150px;
 						border-radius: 4px 4px 0 0;
 					}
+					.circle-name {
+						font-weight: 500;
+						font-size: 16px;
+						line-height: 22px;
+						width: 90%;
+						margin: 0 auto;
+					}
+					.circle-desc {
+						font-weight: 300;
+						font-size: 12px;
+						line-height: 15px;
+						width: 95%;
+						margin: 5px auto;
+					}
+					.link-more {
+						text-align: right;
+						padding: 5px;
+					}
 				}
 				.circle-paginate {
 					text-align: center;
@@ -71,14 +89,216 @@
 			}
 		}
 	}
+	.contents-show {
+		width: 1100px;
+		margin: 0 auto;
+		.side {
+			width: 300px;
+			float: left;
+			.side-top {
+				margin-top: 30px;
+				.circles-link {
+					width: 130px;
+					float: none;
+					margin-left: 85px;
+				}
+			}
+			.side-contents {
+				margin-top: 30px;
+				min-height: 400px;
+				background: white;
+				.circle-image {
+					width: 300px;
+					height: 180px;
+				}
+				.circle-name {
+					font-weight: bold;
+					font-size: 17px;
+					line-height: 32px;
+					margin-left: 17px;
+					margin-bottom: 0;
+				}
+				.circle-desc {
+					font-size: 12px;
+					line-height: 14px;
+					margin-left: 13px;
+				}
+				.circle-status {
+					margin-top: 15px;
+					margin-bottom: 10px;
+					width: 300px;
+					.circle-user-count {
+						width: 70px;
+						font-size: 13px;
+						line-height: 24px;
+						text-align: center;
+						box-sizing: content-box;
+						border: 1px solid #0074bf;
+						border-radius: 5px;
+						color: #0074bf;
+						float: left;
+						margin-left: 65px;
+						margin-bottom: 0;
+						.fa {
+							padding-right: 4px;
+						}
+					}
+					.circle-likes {
+						width: 70px;
+						font-size: 13px;
+						line-height: 24px;
+						text-align: center;
+						box-sizing: content-box;
+						float: right;
+						margin-right: 65px;
+						margin-bottom: 0;
+						a {
+							text-decoration: none;
+							display: block;
+							border-radius: 5px;
+							line-height: 24px;
+							color: #d9534f;
+							border: 1px solid #d9534f;
+						}
+						.fa {
+							padding-right: 4px;
+						}
+						a:hover {
+							border: 1px solid #c9302c;
+							background: #d9534f;
+							color: white;
+						}
+					}
+				}
+				.button_to {
+					text-align: center;
+				}
+			}
+		}
+		.main {
+			width: 800px;
+			float: right;
+			margin-top: 30px;
+			.main-contents {
+				width: 750px;
+				margin-left: 50px;
+				.nav { 
+					li {
+						a {
+							color: #337ab7;
+						}
+						.fa-cog {
+							padding-left: 5px;
+						}
+					}
+					li.active {
+						a {
+							color: black;
+						}
+					}
+				}
+				.tab-content {
+					#circle-circle-members {
+						.circle-member {
+							.circle-user {
+								border-box: content-box;
+								width: 130px;
+								margin: 23px;
+								float: left;
+								.user-image {
+									width: 130px;
+									height: 130px;
+								}
+								p {
+									text-align: center;
+									font-size: 14px;
+									line-height: 30px;
+								}
+							}
+						}
+					}
+					#circle-circle-events {
+						.circle-event {
+							width: 300px;
+							height: 200px;
+							margin-left: 37.5px;
+							margin-right: 37.5px;
+							float: left;
+							.circle-event-image {
+								width: 120px;
+								height: 120px;
+								float: left;
+								margin-top: 20px;
+							}
+							.circle-event-prof {
+								width: 180px;
+								height: 200px;
+								float: right;
+							}
+						}
+						.circle-event:nth-child(odd) {
+							float: left;
+						}
+						.circle-event:nth-child(even) {
+							float: right;
+						}
+					}
+				}
+			}
+		}
+
+	}
+	.contents-new,.contents-edit {
+		width: 600px;
+		margin: 0 auto;
+		h1 {
+			text-align: center;
+			font-size: 30px;
+		}
+	}
 	#messages {
 		height: 400px;
 		overflow: scroll;
-		.my-msg {
-			text-align: right;
+		.msg-user-image {
+			width: 50px;
+			height: 50px;
+			margin: 0 auto;
 		}
-		.other-msg {
-			text-align: left;
+		.user-info {
+			width: 100px;
+			overflow: hidden;
+		}
+		.msg-body {
+			min-width: 50px;
+			max-width: 270px;
+			margin-left: 15px;
+			margin-right: 15px;
+			border-radius: 7px;
+			padding: 10px;
+		}
+		.my-msg {
+			float: right;
+			width: 400px;
+			.user-info {
+				float: right;
+				text-align: center;
+			}
+			.msg-body {
+				float: right;
+				background: #a0c238;
+			}
+		}
+		.oth-msg {
+			float: left;
+			width: 400px;
+			.user-info {
+				float: left;
+				text-align: center;
+			}
+			.msg-body {
+				float: left;
+				background: #bcccd9;
+			}
 		}
 	}
 }

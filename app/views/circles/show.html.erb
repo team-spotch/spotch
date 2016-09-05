@@ -1,43 +1,101 @@
-
-
-<p>
-  <strong>Name:</strong>
-  <%= @circle.name %>
-</p>
-
-<p>
-  <strong>Image:</strong>
-  <%= image_tag @circle.image.url %>
-</p>
-
-<p>
-  <strong>Desc:</strong>
-  <%= @circle.desc %>
-</p>
-
-<% if @circle.circle_member?(@circle,current_user) %>
-	<%= button_to "退会する",circle_circle_users_path(@circle.id),method: :delete %>
-<% else %>
-	<%= button_to "参加する",circle_circle_users_path(@circle.id),method: :post %>
-<% end %>
-
-<p>サークルメンバー一覧</p>
-<% @circle.circle_members.each do |circle_member| %>
-	<div>
-		<%= circle_member.email %>
-	</div>
-
-<% end %>
-
-<p> <%= link_to "主催イベント",circle_circle_events_path(@circle) %> <p>
-
-<% if @circle.circle_member?(@circle,current_user) %>
-  <button type="button" class="btn btn-primary modal-open" data-toggle="modal" data-target="#circleTalk">トーク</button>
-
-<br>
-  <%= link_to '編集する', edit_circle_path(@circle) %> |
-<% end %>
-<%= link_to 'サークル一覧へもどる', circles_path %>
+<div class="contents-show clearfix">
+  <div class="side">
+    <div class="side-top">
+      <%= button_to "サークル一覧",circles_path,class: "btn btn-primary circles-link",method: :get %>
+    </div>
+    <!-- /.side-top -->
+    <div class="side-contents">
+      <% if @circle.image? %>
+        <%= image_tag @circle.image.url,class: "circle-image" %></td>
+      <% else %>
+        <%= image_tag "circle_img_dafault_gray.png",class: "circle-image"%>
+      <% end %>
+      <div class="circle-status clearfix">
+        <p class="circle-user-count"><i class="fa fa-user-plus" aria-hidden="true"></i><%= @circle.circle_members.count %></p>  
+        <% if @circle.circle_liked?(current_user) %>
+          <p class="circle-likes"><a rel="nofollow" data-method="delete" href="/circles/<%= @circle.id %>/circle_likes"><i class="fa fa-thumbs-up" aria-hidden="true"></i><%= @circle.circle_likes.count %></a></p>
+        <% else %>    
+          <p class="circle-likes"><a rel="nofollow" data-method="post" href="/circles/<%= @circle.id %>/circle_likes"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i><%= @circle.circle_likes.count %></a></p>   
+        <% end %>
+      </div>
+      <!-- /.circle-status -->
+      <p class="circle-name"><%= @circle.name %></p>
+      <p class="circle-desc"><%= @circle.desc %></p>
+      <% if @circle.circle_member?(@circle,current_user) %>
+        <%= button_to "退会する",circle_circle_users_path(@circle.id),class: "btn btn-warning",method: :delete %>
+      <% else %>
+        <%= button_to "参加する",circle_circle_users_path(@circle.id),class: "btn btn-warning",method: :post %>
+      <% end %>
+    </div>
+    <!-- /.side-contents -->
+  </div>
+  <!-- /.side -->
+  <div class="main">
+    <div class="main-contents">
+      <ul class="nav nav-tabs">
+        <li class="active"><a href="#circle-circle-members" data-toggle="tab">メンバー</a></li>
+        <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown">主催イベント</a>
+            <ul class="dropdown-menu">
+              <li><a href="#circle-circle-events" data-toggle="tab">イベント新着</a></li>
+              <li><%= link_to 'イベント一覧', circle_circle_events_path(@circle) %></li>
+            </ul>
+          </li>
+        <% if @circle.circle_member?(@circle,current_user) %>
+          <li><a data-toggle="modal" data-target="#circleTalk">トーク</a></li>
+          <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown">設定<i class="fa fa-cog" aria-hidden="true"></i></a>
+            <ul class="dropdown-menu">
+              <li><%= link_to 'サークル編集', edit_circle_path(@circle) %></li>
+              <li><%= link_to 'サークル削除', circle_path(@circle),method: :delete %></li>
+            </ul>
+          </li>
+        <% end %>
+      </ul>
+      <div class="tab-content">
+        <div class="tab-pane active" id="circle-circle-members">
+          <div class="circle-member clearfix">
+            <% @circle.circle_members.each do |circle_member| %>
+              <div class="circle-user">
+                <% if circle_member.user_prof.try(:image) %>
+                  <%= image_tag circle_member.user_prof.image.url,class: 'user-image img-circle' %>
+                <% else %>
+                  <%= image_tag 'user_noimage_default.png',class: 'user-image img-circle' %>
+                <% end %>
+              <p><%= circle_member.email %></p>
+              </div>
+              <!-- /.circle-user -->
+            <% end %>
+          </div>
+          <!-- /.circle-member -->
+        </div>
+        <!-- /#circle-circle-member -->
+        <div class="tab-pane clearfix" id="circle-circle-events">
+          <% @circle.circle_events.limit(10).each do |circle_event| %>
+            <div class="circle-event clearfix">
+              <% if circle_event.image? %>
+                <%= image_tag circle_event.image.url,class: "circle-event-image" %>
+              <% else %>
+                <%= image_tag "circle_img_dafault_gray.png",class: "circle-event-image" %>
+              <% end %>
+              <div class="circle-event-prof">
+                <p>イベント名: <%= link_to circle_event.title ,circle_circle_event_path(@circle,circle_event) %></p>
+                <p>概要:<%= circle_event.desc %></p>
+              </div>
+              <!-- /.circle-event-prof -->
+            </div>
+            <!-- /.circle-event -->
+          <% end %>
+        </div>
+        <!-- /#circle-circle-event -->
+      </div>
+      <!-- /.tab-content -->
+    </div>
+    <!-- /.main-content -->
+  </div>
+  <!-- /.main -->
+</div>
+<!-- /.contents-show -->
 
 <div class="modal fade" id="circleTalk" tabindex="-1" role="dialog" aria-labelledby="circleTalkLabel">
   <div class="modal-dialog" role="document">
@@ -48,12 +106,33 @@
       </div>
       <!-- /.modal-header -->
       <div class="modal-body">
-        <div id='messages'>
+        <div class="clearfix" id='messages'>
           <% @circle.circle_talks.each do |circle_talk| %>
             <% if circle_talk.user.id == current_user.id %>
-              <p class="my-msg"><%= circle_talk.body %>  投稿者:<%= circle_talk.user.email %></p>
+              <div class="message my-msg clearfix">
+                <div class="user-info">
+                  <% if current_user.user_prof.try(:image) %>
+                    <%= image_tag current_user.user_prof.image.url,class: "msg-user-image img-circle" %>
+                  <% else %>
+                    <%= image_tag 'user_noimage_default.png',class: "msg-user-image img-circle" %>
+                  <% end %>
+                  <p class="msg-user-name"><%= circle_talk.user.email%></p>
+                </div>
+                <p class="msg-body"><%= circle_talk.body %></p>
+
+              </div>
             <% else %>
-              <p class="other-msg"><%= circle_talk.body %>  投稿者:<%= circle_talk.user.email %></p>
+              <div class="message oth-msg clearfix">
+                <div class="user-info">
+                  <% if circle_talk.user.user_prof.try(:image) %>
+                    <%= image_tag circle_talk.user.user_prof.image.url,class: "msg-user-image img-circle" %>
+                  <% else %>
+                    <%= image_tag 'user_noimage_default.png',class: "msg-user-image img-circle" %>
+                  <% end %>
+                  <p class="msg-user-name"><%= circle_talk.user.email%></p>
+                </div>
+                <p class="msg-body"><%= circle_talk.body %></p>
+              </div>
             <% end %>
           <% end %>
         </div>
@@ -87,11 +166,38 @@
 
   var channel = pusher.subscribe(line);
   channel.bind('chat_event', function(data) {
+    var user_name = data.name;
     var messagelog = document.getElementById('messages');
+    var message = document.createElement('div');
+    var info = document.createElement('div');
+    info.className = 'user-info';
+    var name = document.createElement('p');
+    name.className = 'msg-user-name';
+    name.innerHTML = data.name;
     var p = document.createElement('p');
-    p.innerHTML = data.message + " 投稿者:" + data.name;
-    messagelog.appendChild(p);
+    var img01 = document.createElement('img');
+    img01.className = 'msg-user-image img-circle';
+    $(img01).attr('src','/assets/'+ data.image);
+    p.className = 'msg-body';
+    p.innerHTML = data.message;
+    if(user_name == '<%= current_user.email %>'){
+      message.className = 'message my-msg clearfix';
+    }else{
+      message.className = 'message oth-msg clearfix';
+    }
+
+    info.appendChild(img01);
+    info.appendChild(name);
+    message.appendChild(info);
+    message.appendChild(p);
+    messagelog.appendChild(message);
+    
+    var body = document.getElementById('body');
+    body.value = '';
+
+
   });
+
 </script>
 <script>
   // $(function(){

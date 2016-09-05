@@ -27,9 +27,9 @@
           <% else %>
             <%= image_tag "circle_img_dafault_gray.png",class: "circle-image"%>
           <% end %>
-          <p><%= circle.name %></p>
-          <p><%= circle.desc %></p>
-          <p><%= link_to 'もっとみる', circle_path(circle) %></p>
+          <p class="circle-name"><%= circle.name %></p>
+          <p class="circle-desc"><%= circle.desc %></p>
+          <p class="link-more"><a href="/circles/<%= circle.id %>">もっとみる<i class="fa fa-external-link" aria-hidden="true"></i></a></p>
         </div>
         <!-- /.circle -->
       <% end %>

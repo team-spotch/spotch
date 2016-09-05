@@ -11,10 +11,16 @@ class CircleTalksController < ApplicationController
 		@circle_talk.save 
 
 		line = "circle_talk_" + params[:circle_id].to_s
+		if current_user.user_prof.try(:image)
+			user_image = current_user.user_prof.image.url
+		else
+			user_image = 'user_noimage_default-92ed5a1a77657124f60ae8717ac534ebab88b5bc4491df113c2b72cbb90bf121.png'
+		end
 
 		Pusher.trigger(line,'chat_event',{
 			message: circle_talk_params[:body],
-			name: current_user.email
+			name: current_user.email,
+			image: user_image
 		})
 
 

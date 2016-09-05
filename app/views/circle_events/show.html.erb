@@ -1,4 +1,6 @@
 
+
+
 <% if @circle_event.author.id == current_user.id %>
 	<% if @circle_event.event_pending?(@circle_event).exists?%>
 		<p><%= @circle_event.event_pending?(@circle_event).count %>件の承認待ちがあります</p>
@@ -17,6 +19,7 @@
 <p>イベント詳細:<%= @circle_event.desc %></p>
 <p>日時:<%= @circle_event.event_date %></p>
 <p>場所:<%= @circle_event.place %></p>
+<div id="map"></div>
 <p>主催者からのメッセージ:<%= @circle_event.one_phrase %></p>
 
 <% if @circle_event.ticket_status?(@circle_event,current_user,false).exists? %>
@@ -50,3 +53,39 @@
 	<%= link_to "イベント削除",circle_circle_event_path(@circle,@circle_event),method: :delete %>
 <% end %>
 <%= link_to "イベント一覧に戻る",circle_circle_events_path %>
+
+<script>
+		function initMap() {
+  			var map = new google.maps.Map(document.getElementById('map'), {
+	    	center: {lat: <%= @location.latitude %>, lng: <%= @location.longitude %>},
+    		zoom: 15,
+    		zoomControl: true,
+		  	mapTypeControl: true,
+ 			scaleControl: true,
+ 			streetViewControl: true,
+ 			rotateControl: true,
+			});
+			var marker = new google.maps.Marker({
+				position: {lat: <%= @location.latitude %>,lng: <%= @location.longitude %>},
+				map: map,
+				title: "hello world",
+				draggable: true
+			});
+			// map.addListener('click',function(e){
+			// 	// var marker1 = new google.maps.Marker({
+			// 	// 	position: e.latLng,
+			// 	// 	map: map,
+			// 	// 	title: "hello world",
+			// 	// 	draggable: true
+			// 	// });
+			// 	marker.setPosition(e.latLng);
+			// 	var position = marker.getPosition();
+			// 	var lat = position.lat();
+			// 	var lng = position.lng();
+			// 	// console.log(position.toString());
+			// 	console.log(lat);
+			// });
+			
+		}
+	</script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCAm2I60JeGDgh48VJFDBuSGrlwfyiqVbA&callback=initMap"></script>
