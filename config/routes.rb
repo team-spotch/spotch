@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
-  root 'circles#index'
+
+  root 'home#top'
 
   devise_for :users
   
