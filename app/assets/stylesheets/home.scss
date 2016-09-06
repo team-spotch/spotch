@@ -15,8 +15,15 @@
 			height: 600px;
         	background:linear-gradient(-45deg, rgba(230, 247, 0, .35), rgba(255, 0, 161, .35)), url(/images/top-bg.jpg);
         	background-size: 100% 600px;
+        	h1 {
+        		margin: 0;
+        		padding-top: 130px;
+        		text-align: center;
+        		color: white;
+        		font-size: 45px;
+        	}
         	.sub-desc {
-        		padding-top: 200px;
+        		padding-top: 25px;
 	        	p {
 	        		color: white;
 	        		text-align: center;
