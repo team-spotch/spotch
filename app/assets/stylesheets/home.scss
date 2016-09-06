@@ -24,6 +24,26 @@
 	        		line-height: 30px;
 	        	}
         	}	
+        	p.get-start {
+        		width: 200px;
+        		height: 44px;
+        		margin: 25px auto 0;
+        		color: white;
+        		text-align: center;
+        		font-size: 23px;
+        		line-height: 44px;
+        		background: #a0c238;
+        		border-radius: 7px;
+        		a {
+        			display: block;
+        			color: white;
+        			text-decoration: none;
+        		}
+        		a:hover {
+        			background: #449d44;
+        			border-radius: 7px;
+        		}
+        	}
 		}
 	}
 }
