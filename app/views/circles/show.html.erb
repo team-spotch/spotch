@@ -71,7 +71,7 @@
         </div>
         <!-- /#circle-circle-member -->
         <div class="tab-pane clearfix" id="circle-circle-events">
-          <% @circle.circle_events.limit(10).each do |circle_event| %>
+          <% @circle.circle_events.limit(10).order('created_at DESC').each do |circle_event| %>
             <div class="circle-event clearfix">
               <% if circle_event.image? %>
                 <%= image_tag circle_event.image.url,class: "circle-event-image" %>
