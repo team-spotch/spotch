@@ -1,6 +1,6 @@
 
 <div class="contents-show">
-<div class="main">
+	<div class="main">
 	</div>
 	<!-- /.main -->
 	<div class="side">
@@ -16,7 +16,7 @@
 		            <a class="dropdown-toggle" data-toggle="dropdown">設定<i class="fa fa-cog" aria-hidden="true"></i></a>
 		            <ul class="dropdown-menu">
 		            	<li><%= link_to 'イベント編集', edit_circle_circle_event_path(@circle_event.circle,@circle_event) %></li>
-		            	<li><%= link_to 'サークル削除', circle_circle_event_path(@circle_event.circle,@circle_event),method: :delete %></li>
+		            	<li><%= link_to 'イベント削除', circle_circle_event_path(@circle_event.circle,@circle_event),method: :delete %></li>
 		            </ul>
 		         </li>
 			    <% end %>
@@ -72,7 +72,6 @@
 
 
 <p>主催者: <%= @circle_event.author.email %></p>
-
 <p>イベント名: <%= @circle_event.title %></p>
 <p>イベント詳細:<%= @circle_event.desc %></p>
 <p>日時:<%= @circle_event.event_date %></p>
@@ -93,10 +92,6 @@
 		<p><%= talk.body %> :<%= talk.user.email %></p>
 	<% end %>
 
-	<%= form_tag(circle_event_talks_path,method: "POST") do %>
-		<%= text_field_tag :body %>
-		<%= submit_tag "送信" %>
-	<% end %>
 <% end %>
 
 
@@ -104,22 +99,103 @@
 
 <%= link_to "イベント一覧に戻る",circle_circle_events_path %>
 <div class="modal fade" id="eventTalk" tabindex="-1">
-	<div class="modal-dialog">
+	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal"><span>×</span></button>
 				<h4 class="modal-title">イベントトーク</h4>
 			</div>
+			<!-- /.modal-header -->
 			<div class="modal-body">
-				本文
+				<div class="clearfix" id='eventMessages'>
+		        <% @circle_event_talks.each do |event_talk| %>
+		            <% if event_talk.user.id == current_user.id %>
+		            	<div class="message my-msg clearfix">
+		                	<div class="user-info">
+		                		<% if current_user.user_prof.try(:image) %>
+		                    		<%= image_tag current_user.user_prof.image.url,class: "msg-user-image img-circle" %>
+		                    	<% else %>
+		                    		<%= image_tag 'user_noimage_default.png',class: "msg-user-image img-circle" %>
+		                    	<% end %>
+		                  		<p class="msg-user-name"><%= event_talk.user.email%></p>
+		                	</div>
+		                	<p class="msg-body"><%= event_talk.body %></p>
+						</div>
+		            <% else %>
+		                <div class="message oth-msg clearfix">
+		               		<div class="user-info">
+		                 		<% if event_talk.user.user_prof.try(:image) %>
+		                    		<%= image_tag event_talk.user.user_prof.image.url,class: "msg-user-image img-circle" %>
+		                  		<% else %>
+		                    		<%= image_tag 'user_noimage_default.png',class: "msg-user-image img-circle" %>
+		              		    <% end %>
+		                  		<p class="msg-user-name"><%= event_talk.user.email%></p>
+		                	</div>
+		                	<p class="msg-body"><%= event_talk.body %></p>
+		              	</div>
+		            <% end %>
+		        <% end %>
+		        </div>
+				<%= form_tag(circle_event_talks_path(@circle_event),:remote => true) do %>
+					<%= text_field_tag :body %>
+					<%= submit_tag "送信" %>
+				<% end %>
 			</div>
+			<!-- /.modal-body -->
 			<div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal">閉じる</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 			</div>
+			<!-- /.modal-footer -->
 		</div>
+		<!-- /.modal-content -->
 	</div>
+	<!-- /.modal-dialog -->
 </div>
 
+<script>
+  Pusher.logToConsole = true;
+
+  var pusher = new Pusher('26f18dcdcf80c348ef52', {
+    encrypted: true
+  });
+
+  var line = "circle_event_talk_<%= @circle_event.id.to_s%>" ;
+
+  var channel = pusher.subscribe(line);
+  channel.bind('chat_event', function(data) {
+    var user_name = data.name;
+    var messagelog = document.getElementById('eventMessages');
+    var message = document.createElement('div');
+    var info = document.createElement('div');
+    info.className = 'user-info';
+    var name = document.createElement('p');
+    name.className = 'msg-user-name';
+    name.innerHTML = data.name;
+    var p = document.createElement('p');
+    var img01 = document.createElement('img');
+    img01.className = 'msg-user-image img-circle';
+    $(img01).attr('src','/assets/'+ data.image);
+    p.className = 'msg-body';
+    p.innerHTML = data.message;
+    if(user_name == '<%= current_user.email %>'){
+      message.className = 'message my-msg clearfix';
+    }else{
+      message.className = 'message oth-msg clearfix';
+    }
+
+    info.appendChild(img01);
+    info.appendChild(name);
+    message.appendChild(info);
+    message.appendChild(p);
+    messagelog.appendChild(message);
+    
+    var body = document.getElementById('body');
+    body.value = '';
+
+
+  });
+
+</script>
 <script>
 		function initMap() {
   			var map = new google.maps.Map(document.getElementById('map'), {
