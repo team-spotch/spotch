@@ -1,6 +1,52 @@
 
-<div class="contents-show">
+<div class="contents-show clearfix">
 	<div class="main">
+		<div class="main-top">
+			<%= button_to "イベント一覧",circle_circle_events_path(@circle_event.circle),class: "btn btn-primary",method: :get %>
+		</div>
+		<!-- /.main-top -->
+		<div class="main-contents">
+			<h5><span class="heading">主催者</span></h5>
+			<p><%= @circle_event.author.email %></p>
+			<h5><span class="heading">イベント名</span></h5>
+			<p><%= @circle_event.title %></p>
+			<h5><span class="heading">イベント詳細</span></h5>
+			<p><%= @circle_event.desc %></p>
+			<h5><span class="heading">日時</span></h5>
+			<% if @circle_event.event_date.blank? %>
+				<p></p><br/>
+			<% else %>
+				<p><%= @circle_event.event_date %></p>
+			<% end %>
+			<h5><span class="heading">主催者のメッセージ</span></h5>
+			<% if @circle_event.one_phrase.blank? %>	
+				<p></p><br/>
+			<% else %>
+				<p><%= @circle_event.one_phrase %></p>
+			<% end %>
+			<h5><span class="heading">場所</span></h5>
+			<% if @circle_event.place.blank? %>
+				<p></p><br/>
+			<% else %>
+				<p><%= @circle_event.place %></p>
+				<div id="map"></div>
+			<% end %>
+
+			<div class="event-apply">
+				<% if @circle_event.ticket_status?(@circle_event,current_user,false).exists? %>
+					<h5><span class="heading">申し込み状況</span></h5>
+					<p>承認待ち</p>
+				<% elsif @circle_event.ticket_status?(@circle_event,current_user,true).exists? %>
+					<h5><span class="heading">申し込み状況</span></h5>
+					<p>参加承認済み</p>
+					<%= button_to "参加キャンセル",destroy_circle_event_attend_path(@circle_event.circle,@circle_event),class: "btn btn-info btn-sm",method: :delete %>
+				<% else %>
+					<%= button_to "参加申し込み",circle_event_attend_path(@circle_event.circle,@circle_event),class: "btn btn-warning",method: :post %>
+				<% end %>
+			</div>
+			
+		</div>
+		<!-- /.main-contents -->
 	</div>
 	<!-- /.main -->
 	<div class="side">
@@ -8,7 +54,7 @@
 			<ul class="nav nav-tabs" role="tablist">
 	    		<li role="presentation" class="active"><a href="#event-members" aria-controls="home" role="tab" data-toggle="tab">メンバー</a></li>
 	    		<% if @circle_event.ticket_status?(@circle_event,current_user,true).exists? %>
-			    <li><a data-toggle="modal" data-target="#eventTalk">トーク</a></li>
+			    	<li><a data-toggle="modal" data-target="#eventTalk">トーク</a></li>
 			    <% end %>
 			    <% if current_user.id == @circle_event.author.id %>
 			    <li role="presentation"><a href="#approve" aria-controls="settings" role="tab" data-toggle="tab">参加承認待ち<span class="badge"><%= @circle_event.event_pending?(@circle_event).count %></span></a></li>
@@ -64,40 +110,9 @@
 		<!-- /.side-contents -->
 	</div>
 	<!-- /.side -->
-
-	
 </div>
 <!-- /.contents-show -->
 
-
-
-<p>主催者: <%= @circle_event.author.email %></p>
-<p>イベント名: <%= @circle_event.title %></p>
-<p>イベント詳細:<%= @circle_event.desc %></p>
-<p>日時:<%= @circle_event.event_date %></p>
-<p>場所:<%= @circle_event.place %></p>
-<div id="map"></div>
-<p>主催者からのメッセージ:<%= @circle_event.one_phrase %></p>
-
-<% if @circle_event.ticket_status?(@circle_event,current_user,false).exists? %>
-	<p>承認待ち</p>
-<% elsif @circle_event.ticket_status?(@circle_event,current_user,true).exists?  %>
-	<%= button_to "参加キャンセル",destroy_circle_event_attend_path(@circle_event.circle,@circle_event),method: :delete %>
-<% else %>
-	<%= button_to "参加",circle_event_attend_path(@circle_event.circle,@circle_event),method: :post %>
-<% end %>
-
-<% if @circle_event.ticket_status?(@circle_event,current_user,true).exists? %>
-	<% @circle_event_talks.each do |talk| %>
-		<p><%= talk.body %> :<%= talk.user.email %></p>
-	<% end %>
-
-<% end %>
-
-
-
-
-<%= link_to "イベント一覧に戻る",circle_circle_events_path %>
 <div class="modal fade" id="eventTalk" tabindex="-1">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
