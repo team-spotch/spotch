@@ -1,59 +1,216 @@
 
+<div class="contents-show clearfix">
+	<div class="main">
+		<div class="main-top">
+			<%= button_to "イベント一覧",circle_circle_events_path(@circle_event.circle),class: "btn btn-primary",method: :get %>
+		</div>
+		<!-- /.main-top -->
+		<div class="main-contents">
+			<h5><span class="heading">主催者</span></h5>
+			<p><%= @circle_event.author.email %></p>
+			<h5><span class="heading">イベント名</span></h5>
+			<p><%= @circle_event.title %></p>
+			<h5><span class="heading">イベント詳細</span></h5>
+			<p><%= @circle_event.desc %></p>
+			<h5><span class="heading">日時</span></h5>
+			<% if @circle_event.event_date.blank? %>
+				<p></p><br/>
+			<% else %>
+				<p><%= @circle_event.event_date %></p>
+			<% end %>
+			<h5><span class="heading">主催者のメッセージ</span></h5>
+			<% if @circle_event.one_phrase.blank? %>	
+				<p></p><br/>
+			<% else %>
+				<p><%= @circle_event.one_phrase %></p>
+			<% end %>
+			<h5><span class="heading">場所</span></h5>
+			<% if @circle_event.place.blank? %>
+				<p></p><br/>
+			<% else %>
+				<p><%= @circle_event.place %></p>
+				<div id="map"></div>
+			<% end %>
+
+			<div class="event-apply">
+				<% if @circle_event.ticket_status?(@circle_event,current_user,false).exists? %>
+					<h5><span class="heading">申し込み状況</span></h5>
+					<p>承認待ち</p>
+				<% elsif @circle_event.ticket_status?(@circle_event,current_user,true).exists? %>
+					<h5><span class="heading">申し込み状況</span></h5>
+					<p>参加承認済み</p>
+					<%= button_to "参加キャンセル",destroy_circle_event_attend_path(@circle_event.circle,@circle_event),class: "btn btn-info btn-sm",method: :delete %>
+				<% else %>
+					<%= button_to "参加申し込み",circle_event_attend_path(@circle_event.circle,@circle_event),class: "btn btn-warning",method: :post %>
+				<% end %>
+			</div>
+			
+		</div>
+		<!-- /.main-contents -->
+	</div>
+	<!-- /.main -->
+	<div class="side">
+		<div class="side-contents">
+			<ul class="nav nav-tabs" role="tablist">
+	    		<li role="presentation" class="active"><a href="#event-members" aria-controls="home" role="tab" data-toggle="tab">メンバー</a></li>
+	    		<% if @circle_event.ticket_status?(@circle_event,current_user,true).exists? %>
+			    	<li><a data-toggle="modal" data-target="#eventTalk">トーク</a></li>
+			    <% end %>
+			    <% if current_user.id == @circle_event.author.id %>
+			    <li role="presentation"><a href="#approve" aria-controls="settings" role="tab" data-toggle="tab">参加承認待ち<span class="badge"><%= @circle_event.event_pending?(@circle_event).count %></span></a></li>
+			    <li class="dropdown">
+		            <a class="dropdown-toggle" data-toggle="dropdown">設定<i class="fa fa-cog" aria-hidden="true"></i></a>
+		            <ul class="dropdown-menu">
+		            	<li><%= link_to 'イベント編集', edit_circle_circle_event_path(@circle_event.circle,@circle_event) %></li>
+		            	<li><%= link_to 'イベント削除', circle_circle_event_path(@circle_event.circle,@circle_event),method: :delete %></li>
+		            </ul>
+		         </li>
+			    <% end %>
+		  	</ul>
+		  	<!-- /.nav-tabs -->
+		  	<div class="tab-content">
+			    <div class="tab-pane active" id="event-members">
+				    <div class="circle-event-member clearfix">
+			            <% @circle_event.event_participants(@circle_event).each do |ticket| %>
+			                <div class="event-user">
+			                    <% if ticket.user.user_prof.try(:image) %>
+			                    	<%= image_tag ticket.user_prof.image.url,class: 'user-image img-circle' %>
+			         			<% else %>
+			            			<%= image_tag 'user_noimage_default.png',class: 'user-image img-circle' %>
+			          			<% end %>
+			          			<p><%= ticket.user.email %></p>
+			        		</div>
+			        		<!-- /.event-user -->
+			      		<% end %>
+			    	</div>
+			    	<!-- /.circle-event-member -->
+			    </div>
+			  	<!-- /#event-members -->
+			  	<div class="tab-pane" id="approve">
+			  		<div class="event-attend-member">
+			  			<% @circle_event.event_pending?(@circle_event).each do |ticket| %>
+			  				<div class="attend-user">
+			                    <% if ticket.user.user_prof.try(:image) %>
+			                    	<%= image_tag ticket.user_prof.image.url,class: 'user-image img-circle' %>
+			         			<% else %>
+			            			<%= image_tag 'user_noimage_default.png',class: 'user-image img-circle' %>
+			          			<% end %>
+			          			<p><%= ticket.user.email %></p>
+			          			<%= button_to "承認する",approve_circle_event_attend_path(@circle_event.circle,@circle_event,ticket.id),class: "btn btn-danger" %>
+			        		</div>
+			        		<!-- /.attend-user -->
+						<% end %>
+			  		</div>
+			  		<!-- /.event-attend-member -->
+			  	</div>
+			  	<!-- /#approve -->
+			</div>
+			<!-- /.tab-content -->
+		</div>
+		<!-- /.side-contents -->
+	</div>
+	<!-- /.side -->
+</div>
+<!-- /.contents-show -->
+
+<div class="modal fade" id="eventTalk" tabindex="-1">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"><span>×</span></button>
+				<h4 class="modal-title">イベントトーク</h4>
+			</div>
+			<!-- /.modal-header -->
+			<div class="modal-body">
+				<div class="clearfix" id='eventMessages'>
+		        <% @circle_event_talks.each do |event_talk| %>
+		            <% if event_talk.user.id == current_user.id %>
+		            	<div class="message my-msg clearfix">
+		                	<div class="user-info">
+		                		<% if current_user.user_prof.try(:image) %>
+		                    		<%= image_tag current_user.user_prof.image.url,class: "msg-user-image img-circle" %>
+		                    	<% else %>
+		                    		<%= image_tag 'user_noimage_default.png',class: "msg-user-image img-circle" %>
+		                    	<% end %>
+		                  		<p class="msg-user-name"><%= event_talk.user.email%></p>
+		                	</div>
+		                	<p class="msg-body"><%= event_talk.body %></p>
+						</div>
+		            <% else %>
+		                <div class="message oth-msg clearfix">
+		               		<div class="user-info">
+		                 		<% if event_talk.user.user_prof.try(:image) %>
+		                    		<%= image_tag event_talk.user.user_prof.image.url,class: "msg-user-image img-circle" %>
+		                  		<% else %>
+		                    		<%= image_tag 'user_noimage_default.png',class: "msg-user-image img-circle" %>
+		              		    <% end %>
+		                  		<p class="msg-user-name"><%= event_talk.user.email%></p>
+		                	</div>
+		                	<p class="msg-body"><%= event_talk.body %></p>
+		              	</div>
+		            <% end %>
+		        <% end %>
+		        </div>
+				<%= form_tag(circle_event_talks_path(@circle_event),:remote => true) do %>
+					<%= text_field_tag :body %>
+					<%= submit_tag "送信" %>
+				<% end %>
+			</div>
+			<!-- /.modal-body -->
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+			<!-- /.modal-footer -->
+		</div>
+		<!-- /.modal-content -->
+	</div>
+	<!-- /.modal-dialog -->
+</div>
+
+<script>
+  Pusher.logToConsole = true;
+
+  var pusher = new Pusher('26f18dcdcf80c348ef52', {
+    encrypted: true
+  });
+
+  var line = "circle_event_talk_<%= @circle_event.id.to_s%>" ;
+
+  var channel = pusher.subscribe(line);
+  channel.bind('chat_event', function(data) {
+    var user_name = data.name;
+    var messagelog = document.getElementById('eventMessages');
+    var message = document.createElement('div');
+    var info = document.createElement('div');
+    info.className = 'user-info';
+    var name = document.createElement('p');
+    name.className = 'msg-user-name';
+    name.innerHTML = data.name;
+    var p = document.createElement('p');
+    var img01 = document.createElement('img');
+    img01.className = 'msg-user-image img-circle';
+    $(img01).attr('src','/assets/'+ data.image);
+    p.className = 'msg-body';
+    p.innerHTML = data.message;
+    if(user_name == '<%= current_user.email %>'){
+      message.className = 'message my-msg clearfix';
+    }else{
+      message.className = 'message oth-msg clearfix';
+    }
+
+    info.appendChild(img01);
+    info.appendChild(name);
+    message.appendChild(info);
+    message.appendChild(p);
+    messagelog.appendChild(message);
+    
+    var body = document.getElementById('body');
+    body.value = '';
 
 
-<% if @circle_event.author.id == current_user.id %>
-	<% if @circle_event.event_pending?(@circle_event).exists?%>
-		<p><%= @circle_event.event_pending?(@circle_event).count %>件の承認待ちがあります</p>
-		<% @circle_event.event_pending?(@circle_event).each do |ticket| %>
-			<p><%= ticket.user.email %> <%= link_to "承認する",approve_circle_event_attend_path(@circle_event.circle,@circle_event,ticket.id),method: :post %>
-		<% end %>
-    <% else %>
-    	<p>現在、参加承認待ちはありません</p>
-    <% end %>
-<% end %>
+  });
 
-
-<p>主催者: <%= @circle_event.author.email %></p>
-
-<p>イベント名: <%= @circle_event.title %></p>
-<p>イベント詳細:<%= @circle_event.desc %></p>
-<p>日時:<%= @circle_event.event_date %></p>
-<p>場所:<%= @circle_event.place %></p>
-<div id="map"></div>
-<p>主催者からのメッセージ:<%= @circle_event.one_phrase %></p>
-
-<% if @circle_event.ticket_status?(@circle_event,current_user,false).exists? %>
-	<p>承認待ち</p>
-<% elsif @circle_event.ticket_status?(@circle_event,current_user,true).exists?  %>
-	<%= button_to "参加キャンセル",destroy_circle_event_attend_path(@circle_event.circle,@circle_event),method: :delete %>
-<% else %>
-	<%= button_to "参加",circle_event_attend_path(@circle_event.circle,@circle_event),method: :post %>
-<% end %>
-
-<p>参加者一覧</p>
-	<% @circle_event.event_participants(@circle_event).each do |ticket| %>
-		<p><%= ticket.user.email %></p>
-	<% end %>
-
-<% if @circle_event.ticket_status?(@circle_event,current_user,true).exists? %>
-	<% @circle_event_talks.each do |talk| %>
-		<p><%= talk.body %> :<%= talk.user.email %></p>
-	<% end %>
-
-	<%= form_tag(circle_event_talks_path,method: "POST") do %>
-		<%= text_field_tag :body %>
-		<%= submit_tag "送信" %>
-	<% end %>
-<% end %>
-
-
-
-<% if current_user.circle_users.where(circle_id: params[:circle_id]).exists? %>
-	<%= link_to "イベント編集",edit_circle_circle_event_path(@circle,@circle_event) %>
-	<%= link_to "イベント削除",circle_circle_event_path(@circle,@circle_event),method: :delete %>
-<% end %>
-<%= link_to "イベント一覧に戻る",circle_circle_events_path %>
-
+</script>
 <script>
 		function initMap() {
   			var map = new google.maps.Map(document.getElementById('map'), {

@@ -7,7 +7,7 @@ class CircleEventsController < ApplicationController
 	before_action :event_authentication,only: [:new,:create,:update,:destroy]
 
 	def index
-		@circle_events = CircleEvent.where(circle_id: params[:circle_id]).page(params[:page]).per(10)
+		@circle_events = CircleEvent.where(circle_id: params[:circle_id]).order('created_at DESC').page(params[:page]).per(10)
 		@circle = Circle.find(params[:circle_id])
 
 	end
